@@ -14,7 +14,7 @@ class Post(BaseModel):
 async def root():
     return {"message":"Hi cutie !"}
 
-@app.post("/createpost")
+@app.post("/posts")
 def create_post(new_post: Post):
     print(new_post)
     return new_post.model_dump()
