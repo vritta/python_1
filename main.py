@@ -51,5 +51,7 @@ def get_post(id: int):
 def delete_post(id: int):
     post_ind = find_ind(id)
     print(post_ind)
+    if post_ind == None:
+        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND)
     my_data.pop(post_ind)
     return Response(status_code= status.HTTP_204_NO_CONTENT)
