@@ -13,6 +13,11 @@ def find_post(id):
         if p["id"]==id:
             return p
 
+def find_ind(id):
+    for i,p in enumerate(my_data):
+        if p["id"]==id:
+            return i
+
 class Post(BaseModel):
     id: int
     title: str
@@ -22,7 +27,7 @@ class Post(BaseModel):
 my_post = [{}]
 @app.get("/")
 async def root():
-    return {"message":"Hi cutie !"}
+    return {"message": my_data}
 
 @app.post("/posts", status_code=status.HTTP_201_CREATED)
 def create_post(new_post: Post):
@@ -41,3 +46,10 @@ def get_post(id: int):
         raise HTTPException(status_code = status.HTTP_404_NOT_FOUND, detail = f"post with id: {id} not found")
     # return post
     return {"post_detail":post}
+
+@app.delete("/posts/{id}", status_code = status.HTTP_204_NO_CONTENT)
+def delete_post(id: int):
+    post_ind = find_ind(id)
+    print(post_ind)
+    my_data.pop(post_ind)
+    return Response(status_code= status.HTTP_204_NO_CONTENT)
