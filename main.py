@@ -24,7 +24,7 @@ my_post = [{}]
 async def root():
     return {"message":"Hi cutie !"}
 
-@app.post("/posts")
+@app.post("/posts", status_code=status.HTTP_201_CREATED)
 def create_post(new_post: Post):
     new_post = new_post.model_dump()
     new_post["id"] = randint(0,100)
@@ -33,8 +33,8 @@ def create_post(new_post: Post):
     # my_data.model_dump()
     return {"data":my_data}
 
-@app.get("/posts/{id}")
-def get_post(id: int, response: Response):
+@app.get("/posts/{id}", status_code=status.HTTP_201_CREATED)
+def get_post(id: int):
     post = find_post(id)
     if not post:
         # response.status_code = status.HTTP_404_NOT_FOUND
